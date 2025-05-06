@@ -39,9 +39,8 @@ void Agenda::agregarContacto(){
 }
 
 bool Agenda::buscarContactoPorNombre(const string& nombre){
-    // TODO: validar case sensitive
     for(auto& contacto : contactos_){
-        if(contacto.getNombre() == nombre) return true;
+        if(convertirMinus(contacto.getNombre()) == convertirMinus(nombre)) return true;
     }
     return false;
 }
@@ -54,9 +53,9 @@ bool Agenda::buscarContactoPorTelefono(const string& telefono){
 }
 
 Contacto& Agenda::obtenerContactoPorNombre(const string& nombre) {
-    // TODO: validar case sensitive
     for(auto& contacto : contactos_) {
-        if (contacto.getNombre() == nombre) return contacto;
+        if(convertirMinus(contacto.getNombre()) == convertirMinus(nombre)) return contacto;
+        
     }
     throw runtime_error("Contacto no encontrado");
 }
@@ -70,7 +69,7 @@ Contacto& Agenda::obtenerContactoPorTelefono(const string& telefono) {
 
 void Agenda::eliminarContactoPorNombre(const string& nombre){
     for(auto it = contactos_.begin(); it != contactos_.end(); it++){
-        if(it->getNombre() == nombre){
+        if(convertirMinus(it->getNombre()) == convertirMinus(nombre)){
             contactos_.erase(it);
             return;
         }

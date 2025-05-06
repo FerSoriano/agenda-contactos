@@ -20,3 +20,8 @@ void limpiarConsola(){
         system("clear"); // macOS/Linux
     #endif
 };
+
+std::string convertirMinus(std::string str){
+    for(char& c : str){ c = tolower(c); }
+    return str;
+}

@@ -14,6 +14,7 @@ void ejecutarMenu(){
 
     while(ejecutar){
         try{
+            limpiarConsola();
             cout << "\n\n\t##### AGENDA CONTACTOS #####\n\n";
             cout << "1) Agregar nuevo contacto" << "\n"
                 << "2) Buscar contacto por nombre" << "\n"
@@ -53,7 +54,7 @@ void ejecutarMenu(){
                             switch (res){
                                 case 1:{
                                     string nombre;
-                                    cout << "\nNombre: "; cin >> nombre; // TODO: Validar case sensitive
+                                    cout << "\nNombre: "; cin >> nombre;
                                     Contacto& cont = agenda.obtenerContactoPorNombre(nombre);
                                     cont.getInfoContacto();
                                     agenda.editarContacto(cont);
@@ -86,35 +87,41 @@ void ejecutarMenu(){
                     limpiarConsola();
                     bool regresarMenu = false;
                     do{
-                        int res;
-                        cout << "\n\tELIMINAR CONTACTO POR:\n\n"
-                            << "1) Nombre\n"
-                            << "2) Telefono\n"
-                            << "3) Regresar al menu anterior\n\n"
-                            << "Opcion: ";
-                        cin >> res; validarInput();
-                        switch (res){
-                            case 1:{
-                                string nombre;
-                                cout << "\nNombre: "; cin >> nombre; // TODO: Validar case sensitive
-                                agenda.eliminarContactoPorNombre(nombre);
-                                cout << "Contacto eliminado." << endl;
-                                break;
+                        try{
+                            int res;
+                            cout << "\n\tELIMINAR CONTACTO POR:\n\n"
+                                << "1) Nombre\n"
+                                << "2) Telefono\n"
+                                << "3) Regresar al menu anterior\n\n"
+                                << "Opcion: ";
+                            cin >> res; validarInput();
+                            switch (res){
+                                case 1:{
+                                    string nombre;
+                                    cout << "\nNombre: "; cin >> nombre;
+                                    agenda.eliminarContactoPorNombre(nombre);
+                                    cout << "Contacto eliminado." << endl;
+                                    break;
+                                }
+                                case 2:{
+                                    string numeroTelefono;
+                                    cout << "\nTelefono: "; cin >> numeroTelefono;
+                                    agenda.eliminarContactoPorTelefono(numeroTelefono);
+                                    cout << "Contacto eliminado." << endl;
+                                    break;
+                                }           
+                                case 3:
+                                    regresarMenu = true;
+                                    break;                
+                                default:
+                                    cout << "\n*** Opcion incorrecta. Intenta de nuevo ***\n";
+                                    break;
                             }
-                            case 2:{
-                                string numeroTelefono;
-                                cout << "\nTelefono: "; cin >> numeroTelefono;
-                                agenda.eliminarContactoPorTelefono(numeroTelefono);
-                                cout << "Contacto eliminado." << endl;
-                                break;
-                            }           
-                            case 3:
-                                regresarMenu = true;
-                                break;                
-                            default:
-                                cout << "\n*** Opcion incorrecta. Intenta de nuevo ***\n";
-                                break;
-                        }
+                        } catch (const runtime_error& e){
+                            cerr << "\nError: " << e.what() << endl;
+                        } catch (const exception& e){
+                            cerr << "\nError inesperado: " << e.what() << endl;
+                        } 
                     } while(!regresarMenu);
                     break;
                 }
@@ -123,9 +130,8 @@ void ejecutarMenu(){
                     agenda.mostrarCotactos();
                     break;
                 case 6: // salir
-                    limpiarConsola();
                     char res;
-                    cout << "Seguro que quieres salir? (y): "; cin >> res;
+                    cout << "\n\nSeguro que quieres salir? (y): "; cin >> res;
                     if(tolower(res) == 'y'){
                         cout << "\n\n *** FIN DEL PROGRAMA ***\n\n";
                         ejecutar = false;
