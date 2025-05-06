@@ -10,11 +10,10 @@ using namespace std;
 int main(){
 
     bool run = true;
+    Agenda agenda;
 
     while(run){
         cout << "\n\t##### AGENDA CONTACTOS #####\n\n";
-
-        Agenda agenda;
 
         int opcion;
         while(true){
@@ -26,7 +25,6 @@ int main(){
         }
 
         try{
-            // TODO: VALIDAR PORQUE NO DEJA AGREGAR CONTACTOS
             if(opcion == 1){ // Agregar nuevo contacto
                 limpiarConsola();
                 agenda.agregarContacto();
@@ -36,25 +34,31 @@ int main(){
                 string nombre;
                 cout << "BUSCAR CONTACTO POR NOMBRE" << endl;
                 cout << "Nombre: "; cin >> nombre;
-                agenda.buscarContactoPorNombre(nombre);
+                Contacto& cont = agenda.obtenerContactoPorNombre(nombre);
+                cont.getInfoContacto();
             }
             if(opcion == 3){ // Eliminar contacto por nombre o telefono
                 limpiarConsola();
                 do{
+                    // TODO: Manejar opciones invalidas.
+                    // TODO: Agregar la opcion de ir para atras.
                     int res;
-                    cout << "ELIMINAR POR: \n1) Nombre\n2)Telefono\nOpcion: "; cin >> res;
+                    cout << "ELIMINAR POR: \n1) Nombre\n2) Telefono\nOpcion: "; cin >> res;
                     validarInput();
                     if(res == 0) {cout << "Opcion incorrecta\n\n"; continue;}
                     if(res == 1) {
+                        // TODO: Validar case sensitive
                         string nombre;
-                        cout << "Nombre: "; cin >> nombre;
+                        cout << "\nNombre: "; cin >> nombre;
                         agenda.eliminarContactoPorNombre(nombre);
+                        cout << "Contacto eliminado." << endl;
                         break;
                     }
                     if(res == 2) {
                         string telefono;
-                        cout << "Telefono: "; cin >> telefono;
+                        cout << "\nTelefono: "; cin >> telefono;
                         agenda.eliminarContactoPorTelefono(telefono);
+                        cout << "Contacto eliminado." << endl;
                         break;
                     }
                 } while(true);
@@ -64,15 +68,20 @@ int main(){
                 agenda.mostrarCotactos();
             }
             if(opcion == 5){ // Mostrar contactos
-                cout << "\n\n *** FIN DEL PROGRAMA ***\n\n";
-                run = false;
+                limpiarConsola();
+                char res;
+                cout << "Seguro que quieres salir? (y): "; cin >> res;
+                if(tolower(res) == 'y'){
+                    cout << "\n\n *** FIN DEL PROGRAMA ***\n\n";
+                    run = false;
+                }
             }
 
         } catch (const runtime_error& e){
-            cerr << "Runtime error: " << e.what() << endl;
+            cerr << "Error: " << e.what() << endl;
 
         } catch (const exception& e){
-            cerr << "Error: " << e.what() << endl;
+            cerr << "Error inesperado: " << e.what() << endl;
         }
     }
 
