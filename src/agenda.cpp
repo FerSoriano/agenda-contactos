@@ -81,7 +81,7 @@ void Agenda::eliminarContactoPorTelefono(const string& telefono){
 }
 
 void Agenda::mostrarCotactos(){
-    cout << "\n\t### CONTACTOS ###\n\n";
+    cout << "\n\t### CONTACTOS ###\n";
     for(size_t i=0; i < contactos_.size(); i++){
         contactos_[i].getInfoContacto();
     }
