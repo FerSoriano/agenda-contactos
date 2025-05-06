@@ -9,9 +9,11 @@ private:
     std::vector<Contacto> contactos_;
 public:
     void agregarContacto();
-    Contacto buscarContactoPorNombre(std::string nombre);
-    void eliminarContactoPorNombre(std::string nombre);
-    void eliminarContactoPorTelefono(std::string telefono);
+    Contacto& obtenerContactoPorNombre(const std::string& nombre);
+    bool buscarContactoPorNombre(const std::string& nombre);
+    bool buscarContactoPorTelefono(const std::string& telefono);
+    void eliminarContactoPorNombre(const std::string& nombre);
+    void eliminarContactoPorTelefono(const std::string& telefono);
     void mostrarCotactos();
 };
 
