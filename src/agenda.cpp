@@ -1,5 +1,6 @@
 #include "../include/contacto.h"
 #include "../include/agenda.h"
+#include "../include/utils.h"
 
 #include <iostream>
 #include <string>
@@ -30,7 +31,7 @@ void Agenda::agregarContacto(){
     if(tolower(agregarCorreo) == 'y'){
         string correo;
         cout << "Correo: "; cin >> correo;
-        nuevoContacto.actualizarCorreo(correo);
+        nuevoContacto.setCorreo(correo);
     }
 
     contactos_.push_back(nuevoContacto);
@@ -54,8 +55,15 @@ bool Agenda::buscarContactoPorTelefono(const string& telefono){
 
 Contacto& Agenda::obtenerContactoPorNombre(const string& nombre) {
     // TODO: validar case sensitive
-    for(auto& contacto : contactos_) {  // Iterar por referencia
-        if (contacto.getNombre() == nombre) return contacto;  // Retorna referencia al objeto original
+    for(auto& contacto : contactos_) {
+        if (contacto.getNombre() == nombre) return contacto;
+    }
+    throw runtime_error("Contacto no encontrado");
+}
+
+Contacto& Agenda::obtenerContactoPorTelefono(const string& telefono) {
+    for(auto& contacto : contactos_) {
+        if (contacto.getTelefono() == telefono) return contacto;
     }
     throw runtime_error("Contacto no encontrado");
 }
@@ -78,6 +86,51 @@ void Agenda::eliminarContactoPorTelefono(const string& telefono){
         }
     }
     throw runtime_error("Contacto no encontrado");
+}
+
+void Agenda::editarContacto(Contacto& contacto){
+    int res;
+    bool ejecutar = true;
+    while(ejecutar){
+        cout << "\n1) Editar nombre" << "\n"
+            << "2) Editar numero" << "\n"
+            << "3) Editar correo" << "\n"
+            << "4) Regresar" << "\n"
+            << "Opcion: ";
+            cin >> res; validarInput();
+            switch (res){
+                case 1:{
+                    string nombre;
+                    cout << "\nNuevo nombre: "; cin >> nombre;
+                    contacto.setNombre(nombre);
+                    cout << "\nNombre actualizado\n";
+                    contacto.getInfoContacto();
+                    break;
+                }
+                case 2:{
+                    string numeroTelefono;
+                    cout << "\nNuevo numero: "; cin >> numeroTelefono;
+                    contacto.setTelefono(numeroTelefono);
+                    cout << "\nNumero actualizado\n";
+                    contacto.getInfoContacto();
+                    break;
+                }
+                case 3:{
+                    string correo;
+                    cout << "\nNuevo correo: "; cin >> correo;
+                    contacto.setCorreo(correo);
+                    cout << "\nCorreo actualizado\n";
+                    contacto.getInfoContacto();
+                    break;
+                }           
+                case 4:
+                    ejecutar = false;
+                    break;                
+                default:
+                    cout << "\n*** Opcion incorrecta. Intenta de nuevo ***\n";
+                    break;
+            }
+    }
 }
 
 void Agenda::mostrarCotactos(){
