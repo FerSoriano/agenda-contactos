@@ -19,9 +19,9 @@ public:
     std::string getCorreo();
     void getInfoContacto();
 
-    void actualizarNombre(std::string nombre);
-    void actualizarTelefono(std::string telefono);
-    void actualizarCorreo(std::string correo);
+    void setNombre(std::string nombre);
+    void setTelefono(std::string telefono);
+    void setCorreo(std::string correo);
 };
 
 #endif

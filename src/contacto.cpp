@@ -23,15 +23,15 @@ void Contacto::getInfoContacto(){
         << "Correo: " << correo_ << "\n";
 }
 
-void Contacto::actualizarNombre(string nombre){
+void Contacto::setNombre(string nombre){
     if(nombre.empty()) { throw invalid_argument("El nombre no puede estar vacio."); }
     nombre_ = nombre;
 }
-void Contacto::actualizarTelefono(string telefono){
+void Contacto::setTelefono(string telefono){
     if(telefono.empty()) { throw invalid_argument("El telefono no puede estar vacio."); }
     telefono_ = telefono;
 }
-void Contacto::actualizarCorreo(string correo){
+void Contacto::setCorreo(string correo){
     if(correo.empty()) { throw invalid_argument("El correo no puede estar vacio."); }
     correo_ = correo;
 }
