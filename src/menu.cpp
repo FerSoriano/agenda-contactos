@@ -14,7 +14,6 @@ void ejecutarMenu(){
 
     while(ejecutar){
         try{
-            limpiarConsola();
             cout << "\n\n\t##### AGENDA CONTACTOS #####\n\n";
             cout << "1) Agregar nuevo contacto" << "\n"
                 << "2) Buscar contacto por nombre" << "\n"
