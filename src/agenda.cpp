@@ -1,6 +1,7 @@
 #include "../include/contacto.h"
 #include "../include/agenda.h"
 #include "../include/utils.h"
+#include "../include/csv_manager.h"
 
 #include <iostream>
 #include <string>
@@ -8,9 +9,7 @@
 
 using namespace std;
 
-//TODO: Agregar logica de CSV.
-
-void Agenda::agregarContacto(){
+void Agenda::agregarContacto(CSVManager& archivoCSV){
     string nombre, telefono;
     do{
         cout << "AGREGAR CONTACTO" << endl;
@@ -34,8 +33,17 @@ void Agenda::agregarContacto(){
         nuevoContacto.setCorreo(correo);
     }
 
-    contactos_.push_back(nuevoContacto);
+    archivoCSV.agregarContacto(nuevoContacto); // agregar al CSV
+    contactos_.push_back(nuevoContacto); // agregar al vector
     cout << "\n" << nuevoContacto.getNombre() << " se agrego correctamente." << endl;   
+}
+
+void Agenda::agregarContactosDesdeCSV(Contacto& c){
+    contactos_.push_back(c);
+}
+
+void Agenda::eliminarElementosVector(){
+    contactos_.clear();
 }
 
 bool Agenda::buscarContactoPorNombre(const string& nombre){
@@ -67,27 +75,29 @@ Contacto& Agenda::obtenerContactoPorTelefono(const string& telefono) {
     throw runtime_error("Contacto no encontrado");
 }
 
-void Agenda::eliminarContactoPorNombre(const string& nombre){
+void Agenda::eliminarContactoPorNombre(const string& nombre, CSVManager& archivoCSV){
     for(auto it = contactos_.begin(); it != contactos_.end(); it++){
         if(convertirMinus(it->getNombre()) == convertirMinus(nombre)){
             contactos_.erase(it);
+            archivoCSV.sobreEscribirArchivoCSV(contactos_);
             return;
         }
     }
     throw runtime_error("Contacto no encontrado");
 }
     
-void Agenda::eliminarContactoPorTelefono(const string& telefono){
+void Agenda::eliminarContactoPorTelefono(const string& telefono, CSVManager& archivoCSV){
     for(auto it = contactos_.begin(); it != contactos_.end(); it++){
         if(it->getTelefono() == telefono){
             contactos_.erase(it);
+            archivoCSV.sobreEscribirArchivoCSV(contactos_);
             return;
         }
     }
     throw runtime_error("Contacto no encontrado");
 }
 
-void Agenda::editarContacto(Contacto& contacto){
+void Agenda::editarContacto(Contacto& contacto, CSVManager& archivoCSV){
     int res;
     bool ejecutar = true;
     while(ejecutar){
@@ -130,6 +140,7 @@ void Agenda::editarContacto(Contacto& contacto){
                     break;
             }
     }
+    archivoCSV.sobreEscribirArchivoCSV(contactos_);
 }
 
 void Agenda::mostrarCotactos(){

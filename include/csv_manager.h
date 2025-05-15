@@ -6,9 +6,10 @@
 #include <vector>
 #include <fstream>
 
+class Agenda; // Forward declaration
+
 class CSVManager{
 private:
-    Contacto& crearContacto(std::string nombre, std::string telefono, std::string correo);
     std::string nombreArchivo_;
     std::string formatearContactoComoFilaCSV(Contacto& contacto);
 
@@ -21,11 +22,11 @@ public:
     std::string getNombreArchivo();
 
     bool crearArchivo(); // true si se creo, false si ya existe
-    void agregarRegistro(Contacto& contacto);
-    void sobreEscribirArchivo(std::vector<Contacto>& contactos);
+    void agregarContacto(Contacto& contacto);
+    void sobreEscribirArchivoCSV(std::vector<Contacto>& contactos);
 
 
-    void actualizarContactosVector(std::vector<Contacto>& contactos);
+    void actualizarContactosVector(Agenda& agenda);
     /*
         Leer el CSV linea por linea
         mandar llamar a funcion para crear el objeto Contacto

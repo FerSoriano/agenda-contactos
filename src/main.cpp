@@ -1,6 +1,6 @@
 #include "../include/menu.h"
 
 int main(){
-    ejecutarMenu(); 
+    ejecutarMenuPrincipal(); 
     return 0;
 }
