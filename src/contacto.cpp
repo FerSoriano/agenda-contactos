@@ -10,7 +10,7 @@ Contacto::Contacto(const string& nombre, const string& telefono){
     if(telefono.empty()) { throw invalid_argument("El telefono no puede estar vacio."); }
     nombre_ = nombre;
     telefono_ = telefono;
-    correo_ = "-";
+    correo_ = "NA";
 }
 
 Contacto::~Contacto(){};

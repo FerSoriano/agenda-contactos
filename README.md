@@ -15,5 +15,5 @@
 ## Comando para compilar
 
 ```bash
-g++ -g3 -Wall -Wextra -std=c++17 main.cpp contacto.cpp agenda.cpp menu.cpp utils.cpp  -o ../output/main
+g++ -g3 -Wall -Wextra -std=c++17 main.cpp contacto.cpp agenda.cpp menu.cpp utils.cpp csv_manager.cpp -o ../output/main
 ```
